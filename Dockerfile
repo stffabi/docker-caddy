@@ -16,8 +16,9 @@ ENV CADDYPATH /etc/caddy/assets
 EXPOSE 80 443 2015
 VOLUME /etc/caddy/
 
-ADD caddy /usr/bin/caddy
-ADD etc /etc/caddy
+COPY caddy /usr/bin/caddy
+COPY etc/passwd /etc/passwd
+ADD etc/caddy /etc/caddy
 
 WORKDIR /usr/share/caddy/html
 COPY index.html index.html
