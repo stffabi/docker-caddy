@@ -1,0 +1,23 @@
+machine:
+  services:
+    - docker
+  environment:
+    IMAGE_NAME: stffabi/caddy
+    HUB_TAG: $(if [ "$CIRCLE_BRANCH" == "master" ] ; then echo latest; else echo $CIRCLE_BRANCH; fi;)
+
+compile:
+  override:
+    - chmod 755 build.sh
+    - ./build.sh $IMAGE_NAME:$HUB_TAG
+
+test:
+  override:
+    - echo "No Tests..."
+
+deployment:
+  hub:
+    branch: /.*/
+    commands:
+      - echo Pushing $IMAGE_NAME:$HUB_TAG to docker hub.
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push $IMAGE_NAME:$HUB_TAG
