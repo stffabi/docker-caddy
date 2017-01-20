@@ -8,7 +8,7 @@ machine:
 compile:
   override:
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    - chmod 755 build.sh && ./build.sh $IMAGE_NAME:$CIRCLE_BRANCH $IS_RELEASE
+    - chmod 755 build.sh && ./build.sh $IMAGE_NAME:ci-$CIRCLE_BRANCH $IS_RELEASE
 
 test:
   override:
