@@ -15,12 +15,12 @@ fi
 
 OS=linux
 ARCH=amd64
-PLUGINS=cloudflare,digitalocean,dnsimple,dyn,gandi,googlecloud,namecheap,ovh,rfc2136,route53,vultr,linode
+PLUGINS=tls.dns.cloudflare,tls.dns.digitalocean,tls.dns.dnsimple,tls.dns.dnspod,tls.dns.dyn,tls.dns.exoscale,tls.dns.gandi,tls.dns.googlecloud,tls.dns.linode,tls.dns.namecheap,tls.dns.ovh,tls.dns.rackspace,tls.dns.rfc2136,tls.dns.route53,tls.dns.vultr
 
 echo "Fetching Caddy..."
 curl --silent --show-error --fail --location \
       --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
-      "https://caddyserver.com/download/build?os=${OS}&arch=${ARCH}&features=${PLUGINS}" \
+      "https://caddyserver.com/download/${OS}/${ARCH}?plugins=${PLUGINS}" \
     | tar --no-same-owner -C ./ -xz caddy \
  && chmod 0755 caddy \
  && ./caddy -version
