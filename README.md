@@ -3,7 +3,7 @@
 A [Docker](https://docker.com) image for [Caddy](https://caddyserver.com). This image includes no plugins.
 
 [![](https://images.microbadger.com/badges/image/stffabi/caddy.svg)](https://microbadger.com/images/stffabi/caddy "Get your own image badge on microbadger.com")
-[![](https://img.shields.io/badge/version-0.10.9-blue.svg)](https://github.com/mholt/caddy/tree/v0.10.9)
+[![](https://img.shields.io/badge/version-0.10.10-blue.svg)](https://github.com/mholt/caddy/tree/v0.10.10)
 
 ### License
 
