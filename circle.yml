@@ -1,15 +1,13 @@
-machine:
-  services:
-    - docker
-  environment:
-    IMAGE_NAME: stffabi/caddy
-    IS_RELEASE: $(if [ "$CIRCLE_BRANCH" == "master" ] ; then echo release; else echo ci; fi;)
-
-compile:
-  override:
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    - chmod 755 build.sh && ./build.sh $IMAGE_NAME:ci-$CIRCLE_BRANCH $IS_RELEASE
-
-test:
-  override:
-    - echo "No Tests..."
+version: 2
+jobs:
+  build:
+    machine: true
+    environment:
+      - IMAGE_NAME: stffabi/caddy
+    steps:
+      - checkout
+      - run: |
+          IS_RELEASE=$(if [ "$CIRCLE_BRANCH" == "master" ] ; then echo release; else echo ci; fi;)
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          chmod 755 build.sh
+          ./build.sh $IMAGE_NAME:ci-$CIRCLE_BRANCH $IS_RELEASE
