@@ -29,7 +29,7 @@ docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
              --build-arg VERSION="$CADDY_VERSION - $PLUGINS" \
              --rm=false \
              -t $IMAGE_NAME \
-             .
+             . || exit 1
 
 if [ "$2" == "" ]; then
   echo "Do not deploy."
