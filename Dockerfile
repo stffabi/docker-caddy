@@ -9,6 +9,15 @@ ARG CADDY_PLUGINS
 RUN VERSION=${CADDY_VERSION} PLUGINS=${CADDY_PLUGINS} /bin/sh /usr/bin/builder.sh
 
 #
+# Alpine image to get some needed data
+#
+FROM alpine:latest as alpine
+
+RUN apk add --no-cache \
+    ca-certificates \
+    tzdata
+
+#
 # Image
 #
 FROM scratch
@@ -30,8 +39,10 @@ ENV CADDYPATH /etc/caddy/assets
 EXPOSE 80 443 2015
 VOLUME /etc/caddy/
 
-# copy files from builder container
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+# copy files from other containers
+COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=alpine /usr/share/zoneinfo /usr/share/zoneinfo
+
 COPY --from=builder /install/caddy /usr/bin/caddy
 
 COPY etc/passwd /etc/passwd

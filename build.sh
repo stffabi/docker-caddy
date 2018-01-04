@@ -26,7 +26,6 @@ docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
              --build-arg VCS_REF=$VCS_REF \
              --build-arg CADDY_VERSION=$CADDY_VERSION \
              --build-arg CADDY_PLUGINS=$CADDY_PLUGINS \
-             --build-arg VERSION="$CADDY_VERSION - $PLUGINS" \
              --rm=false \
              -t $IMAGE_NAME \
              . || exit 1
