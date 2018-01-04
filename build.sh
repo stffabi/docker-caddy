@@ -13,24 +13,8 @@ if [ "$1" = "" ]; then
   error_exit "Please provide image tag as first argument."
 fi
 
-OS=linux
-ARCH=amd64
-PLUGINS=tls.dns.cloudflare,tls.dns.digitalocean,tls.dns.dnsimple,tls.dns.dnspod,tls.dns.dyn,tls.dns.exoscale,tls.dns.gandi,tls.dns.googlecloud,tls.dns.linode,tls.dns.namecheap,tls.dns.ovh,tls.dns.rackspace,tls.dns.rfc2136,tls.dns.route53,tls.dns.vultr
-
-echo "Fetching Caddy..."
-curl --silent --show-error --fail --location \
-      --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
-      "https://caddyserver.com/download/${OS}/${ARCH}?plugins=${PLUGINS}" \
-    | tar --no-same-owner -C ./ -xz caddy \
- && chmod 0755 caddy \
- && ./caddy -version
-
-if [ "$?" != "0" ]; then
-  error_exit "Unable to retrieve caddy."
-fi
-
-CADDY_VERSION=`./caddy -version`
-echo "Fetched Caddy Version: $CADDY_VERSION"
+CADDY_VERSION="0.10.9"
+CADDY_PLUGINS=tls.dns.cloudflare,tls.dns.digitalocean,tls.dns.dnsimple,tls.dns.dnspod,tls.dns.dyn,tls.dns.exoscale,tls.dns.gandi,tls.dns.googlecloud,tls.dns.linode,tls.dns.namecheap,tls.dns.ovh,tls.dns.rackspace,tls.dns.rfc2136,tls.dns.route53,tls.dns.vultr
 VCS_REF=`git rev-parse --short HEAD`
 
 if [ "$?" != "0" ]; then
@@ -40,6 +24,8 @@ fi
 echo "Building Docker Image..."
 docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
              --build-arg VCS_REF=$VCS_REF \
+             --build-arg CADDY_VERSION=$CADDY_VERSION \
+             --build-arg CADDY_PLUGINS=$CADDY_PLUGINS \
              --build-arg VERSION="$CADDY_VERSION - $PLUGINS" \
              --rm=false \
              -t $IMAGE_NAME \
@@ -71,7 +57,7 @@ then
   exit 1
 fi
 
-SEMVER=${CADDY_VERSION##Caddy }
+SEMVER=${CADDY_VERSION}
 VERSION=`echo $SEMVER | awk '{split($0,a,"."); print a[1]}'`
 BUILD=`echo $SEMVER | awk '{split($0,a,"."); print a[2]}'`
 PATCH=`echo $SEMVER | awk '{split($0,a,"."); print a[3]}'`
