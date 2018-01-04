@@ -40,9 +40,5 @@ ADD etc/caddy /etc/caddy
 WORKDIR /usr/share/caddy/html
 COPY index.html index.html
 
-# validate install
-RUN /usr/bin/caddy -version
-RUN /usr/bin/caddy -plugins
-
 ENTRYPOINT ["/usr/bin/caddy"]
 CMD ["--conf", "/etc/caddy/Caddyfile", "--log", "stdout"]
