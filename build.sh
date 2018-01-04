@@ -14,7 +14,7 @@ if [ "$1" = "" ]; then
 fi
 
 CADDY_VERSION="0.10.9"
-CADDY_PLUGINS=tls.dns.cloudflare,tls.dns.digitalocean,tls.dns.dnsimple,tls.dns.dnspod,tls.dns.dyn,tls.dns.exoscale,tls.dns.gandi,tls.dns.googlecloud,tls.dns.linode,tls.dns.namecheap,tls.dns.ovh,tls.dns.rackspace,tls.dns.rfc2136,tls.dns.route53,tls.dns.vultr
+CADDY_PLUGINS=
 VCS_REF=`git rev-parse --short HEAD`
 
 if [ "$?" != "0" ]; then
