@@ -13,7 +13,7 @@ if [ "$1" = "" ]; then
   error_exit "Please provide image tag as first argument."
 fi
 
-CADDY_VERSION="0.10.14"
+CADDY_VERSION="0.11.0"
 CADDY_PLUGINS=
 VCS_REF=`git rev-parse --short HEAD`
 
