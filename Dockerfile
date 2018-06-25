@@ -6,7 +6,7 @@ FROM abiosoft/caddy:builder as builder
 ARG CADDY_VERSION
 ARG CADDY_PLUGINS
 
-RUN VERSION=${CADDY_VERSION} PLUGINS=${CADDY_PLUGINS} TELEMETRY=false /bin/sh /usr/bin/builder.sh
+RUN VERSION=${CADDY_VERSION} PLUGINS=${CADDY_PLUGINS} ENABLE_TELEMETRY=false /bin/sh /usr/bin/builder.sh
 
 #
 # Alpine image to get some needed data
